@@ -1,1 +1,8 @@
 theme: jekyll-theme-midnight
+
+github:
+    repository_url: https://github.com/favorable-mutation/eln-db
+    owner_url: https://github.com/favorable-mutation
+    owner_name: Griffin J Rademacher
+
+title: ELN DB
