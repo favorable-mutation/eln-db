@@ -12,6 +12,6 @@
 *.out
 
 # jekyll
-#_site
+docs/_site
 #.sass-cache
 #.jekyll-metadata
