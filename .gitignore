@@ -13,5 +13,5 @@
 
 # jekyll
 docs/_site
-#.sass-cache
-#.jekyll-metadata
+docs/.sass-cache
+docs/.jekyll-metadata
