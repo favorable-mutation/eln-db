@@ -9,7 +9,7 @@ permalink: /project-proposal/
 
 ### Description
 
-This project aims to provide a backend database system for use in an
+This project aims to provide a backend database system for use in an 
 [ELN](https://en.wikipedia.org/wiki/Electronic_lab_notebook)
 (electronic lab notebook) application. ELN systems are utilized by
 modern scientific labs for tracking complex data gathered by researchers
@@ -40,22 +40,20 @@ natural relationships inherent to it, which is better supported by SQL.
 
 ### Technology
 
-This project will be implemented using MySQL to provide a database management
+This project will be implemented using `MySQL` to provide a database management
 system, which will be interface with `R` via the [RMySQL
 package](https://cran.r-project.org/web/packages/RMySQL/index.html) to provide
 access to data for analysis. The interface to the database for input and
-management of data will be provided through a webapp created in Go using the
+management of data will be provided through a webapp created in `Go` using the
 `html/template` package provided as part of the language's standard library. The
 app will communicate with MySQL via the `database/sql` package.
 
 ### Motivation
 
-![Obligatory Meme](https://i.kym-cdn.com/entries/icons/original/000/025/351/afoeeee.jpg)
+![](https://i.kym-cdn.com/entries/icons/original/000/025/351/afoeeee.jpg)
 
 As a combined Biology/CS major, I've spent time working in a lab setting, and am
 interested in applying my skills to writing tools for enabling scientists to do
 what they love. This project is an interesting experiment that I hope will
 familiarize me with the challenges of creating useable software for the
 scientific problem domain.
-
-
