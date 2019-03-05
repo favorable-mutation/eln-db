@@ -41,12 +41,12 @@ natural relationships inherent to it, which is better supported by SQL.
 ### Technology
 
 This project will be implemented using `MySQL` to provide a database management
-system, which will be interface with `R` via the [RMySQL
+system, which will be interfaced with `R` via the [RMySQL
 package](https://cran.r-project.org/web/packages/RMySQL/index.html) to provide
 access to data for analysis. The interface to the database for input and
-management of data will be provided through a webapp created in `Go` using the
-`html/template` package provided as part of the language's standard library. The
-app will communicate with MySQL via the `database/sql` package.
+management of data will be provided through a webapp created with `Python` using the
+[Flask framework](http://flask.pocoo.org/). This framework will also provide the
+interface to the DBMS. 
 
 ### Motivation
 

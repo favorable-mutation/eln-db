@@ -8,4 +8,4 @@ group :jekyll_plugins do
     gem 'jekyll-seo-tag'
 end
 
-gem 'jekyll-theme-midnight'
+gem 'jekyll-theme-tactile'
