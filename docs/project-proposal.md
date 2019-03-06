@@ -46,7 +46,8 @@ package](https://cran.r-project.org/web/packages/RMySQL/index.html) to provide
 access to data for analysis. The interface to the database for input and
 management of data will be provided through a webapp created with `Python` using the
 [Flask framework](http://flask.pocoo.org/). This framework will also provide the
-interface to the DBMS. 
+interface to the DBMS. As a web-based implementation, the result will not be
+platform-specific.
 
 ### Motivation
 
@@ -57,3 +58,31 @@ interested in applying my skills to writing tools for enabling scientists to do
 what they love. This project is an interesting experiment that I hope will
 familiarize me with the challenges of creating useable software for the
 scientific problem domain.
+
+### UML Diagram
+
+The following is a UML diagram of the conceptual design of the database for this
+project.
+
+![](/images/eln-uml.jpg)
+
+### Sample Interaction
+
+A sample interaction with ELN DB would proceed as follows:
+
+1. The user collects data from an experiment and inputs it to the ELN via the web
+   app, specifying their columns for the data, and makes any qualitative notes on
+   the same web form.
+2. The experimental data is stored in the application's `MySQL` database.
+3. The user may then repeat this process many times to gather sufficient data.
+4. When the user would like to check on the data quickly, they may create a
+   simple graph of one or more columns of the data for all trials of the
+   experiment (separate times the experiment was run) through the web app.
+5. If the user would like to remove any datasets they've collected, perhaps if
+   a flaw was discovered in the experimental design or other confounding factors
+   came to light, they can browse all of their datasets through the web app and
+   delete any bad ones.
+6. When the user is ready to analyze their data for making conclusions about
+   their experiment and getting ready to publish, they can read a selection of
+   datasets into a `.csv` file for use with `R`, which tends to load in dataframes
+   from a `.csv`.
