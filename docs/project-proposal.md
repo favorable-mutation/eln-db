@@ -64,7 +64,7 @@ scientific problem domain.
 The following is a UML diagram of the conceptual design of the database for this
 project.
 
-![](/eln-db/images/eln-uml.jpg)
+![](images/eln-uml.jpg)
 
 ### Sample Interaction
 
