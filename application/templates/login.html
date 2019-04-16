@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <title>{{ name }}</title>
+</head>
+<body>
+    <p class="error">{{ error }}</p>
+    <h3>Please enter your MongoDB credentials:</h3>
+    <div class="login">
+    <form role="form" method="POST" action="/">
+        <p>Username: <input class="login-form" type="text" name="user"></p>
+        <p>Password: <input class="login-form" type="password" name="password"></p>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    </div>
+</body>
+</html>

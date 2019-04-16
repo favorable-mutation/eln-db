@@ -1,0 +1,16 @@
+--> login
+^------ login (if bad creds)
+    --> homepage
+^---------- login (if logout)
+        --> get data for past experiment
+    ^---------- homepage
+        ^------ get data (if bad collection name)
+            --> view data
+    ^-------------- homepage
+                --> modify data
+            ^---------- view data (after save changes)
+            ^---------- view data (after discard changes)
+        --> input data for new experiment
+        ^------ input data (if bad collection name)
+            ^-- view data (after save changes)
+        ^------ homepage (after discard changes)

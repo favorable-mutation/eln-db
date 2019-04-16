@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <title>{{ name }}</title>
+</head>
+<body>
+    <p class="error">{{ error }}</p>
+    <h3>Welcome to ELN DB! What would you like to do?</h3>
+    <div class="home">
+    <form role="form" method="POST" action="/home">
+        <button type="view" class="btn btn-default">View/Modify Data</button>
+        <button type="input" class="btn btn-default">Input New Data</button>
+    </form>
+    </div>
+</body>
+</html>

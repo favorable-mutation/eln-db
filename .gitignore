@@ -19,3 +19,9 @@ docs/.jekyll-metadata
 # pdfs
 *.pdf
 *.pptx
+
+# python env
+.Python
+include/
+bin/
+lib/
