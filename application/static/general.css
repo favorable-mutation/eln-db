@@ -1,6 +1,8 @@
 html {
+    background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/Vd3bj2jPe/videoblocks-science-laboratory-room-steadyshot-of-modern-research-laboratory-empty-science-lab-room-pov-of-medical-laboratory-room-lab-working-space-science-laboratory-interior_hbv_r5ml_thumbnail-full01.png");
     font-family: 'Open Sans';
 }
+
 h3 {
     margin: 0.5em auto;
     width: 100%;
@@ -9,4 +11,9 @@ h3 {
 
 p {
     font-size: 1em;
+}
+
+.main {
+    background-color: #ffffff;
+    padding: 0.75em;
 }

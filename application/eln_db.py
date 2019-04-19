@@ -11,22 +11,25 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_pymongo import PyMongo
 
+import ast
+
 # operating system tools
 import os
 
 # start the MongoDB server in the background
-os.system("mongod --config /usr/local/etc/mongod.conf &")
+os.system("mongod --auth --config /usr/local/etc/mongod.conf &")
 
 # initialiaze the flask application
 app = Flask(__name__)
 
 # initialize global variables
+mongo = False
 err = False
 u_username = False
 u_password = False
-cnx = False
-cur = False
-valid_names = []
+u_collection = False
+state = False
+invalid_names = []
 results = []
 
 # define behavior for login page of site
@@ -36,14 +39,17 @@ def login():
     global err
     global u_username
     global u_password
-    global cnx
+    global invalid_names
+    global mongo
 
     # if user is requesting the page, bring them to the login screen
     if request.method == "GET":
         if err:
-            return render_template('login.html', name="ELN DB: Home", error=err)
+            temp = err
+            err = False
+            return render_template('login.html', name="ELN DB: Login", error=err)
         else:
-            return render_template('login.html', name="ELN DB: Home")
+            return render_template('login.html', name="ELN DB: Login")
 
     else:
         # collect form data for username and password on form submission
@@ -52,84 +58,144 @@ def login():
 
         # attempt to login to the MongoDB instance with those credentials
         try:
-            #cnx = mysql.connector.connect(host='localhost',
-            #        user=u_username,
-            #        password=u_password,
-            #        database='lotrfinalrademacherg',
-            #        charset='utf8mb4')
+            app.config['MONGO_AUTH_SOURCE'] = 'admin'
+            app.config["MONGO_URI"] = "mongodb://" + u_username + ":" + \
+                u_password +  "@localhost:27017/eln_db"
+            mongo = PyMongo(app)
 
-            return redirect(url_for('select_action'))
+            return redirect(url_for('home'))
 
-        # return an error message if the MySQL server couldn't be reached or didn't
+        # return an error message if the MongoDB server couldn't be reached or didn't
         # accept the given credentials
-        except:
+        except Exception as e:
+            print(e)
             err = 'Your credentials were invalid, or the MongoDB server could not \
                    be reached. Please try again.'
             return redirect(url_for('login'))
 
-# define behavior for action selection page of site
+# define behavior for login page of site
 # on either GET or POST methods
-@app.route("/select-action", methods=["GET","POST"])
-def select_action():
+@app.route("/home", methods=["GET", "POST"])
+def home():
 
     global err
-    global cur
-    global valid_names
+    global state
+
+    if request.method == "GET":
+        if err:
+            temp = err
+            err = False
+            return render_template('home.html', name="ELN DB: Home", error=temp)
+        else:
+            return render_template('home.html', name="ELN DB: Home")
+
+    else:
+        if 'view' in request.form:
+            state = "What dataset would you like to view?"
+            return redirect(url_for('lookup'))
+        elif 'input' in request.form:
+            state = "What would you like to call your dataset?"
+            return redirect(url_for('lookup'))
+        else:
+            return render_template('home.html', name="ELN DB: Home")
+
+# define behavior for dataset lookup/creation page of site
+# on either GET or POST methods
+@app.route("/lookup", methods=["GET","POST"])
+def lookup():
+
+    global err
+    global state
+    global invalid_names
+    global u_collection
     global results
 
     if request.method == "GET":
 
-        # valid_names = []
-
-        # cur = cnx.cursor()
-
-        # stmt_select = "select character_name from lotr_character"
-
-        # select all character names from the database
-        # cur.execute(stmt_select)
-
-        # for tup in cur.fetchall():
-        #     valid_names.append(tup[0])
-        
+        invalid_names = mongo.db.list_collection_names()
 
         if err:
-            return render_template('select-action.html', name="Select \
-                    Action", error=err, valid_names=valid_names)
+            temp = err
+            err = False
+            return render_template('lookup.html', name="ELN DB: \
+                    Lookup", state=state, \
+                    error=temp, invalid_names=invalid_names)
         else:
-            return render_template('select-action.html', name="Select \
-                    Action")
+            return render_template('lookup.html', name="ELN DB: \
+                    Lookup", state=state)
 
     else:
-        u_char_name = request.form.get('char-name')
+        u_collection = request.form.get('lookup')
 
-        # if u_char_name not in valid_names:
-        #     err = "Character not found. Please try again. \
-        #             Valid character names are:"
-        #     return redirect(url_for('select_action'))
+        if u_collection in invalid_names and state == "What would you like to call your dataset?":
+            err = "Dataset already exists. Please try again. \
+                    Existing dataset names are:"
+            return redirect(url_for('lookup'))
 
-        # args = [u_char_name]
+        elif u_collection in invalid_names:
+            return redirect(url_for('view'))
 
-        # cur.callproc("track_character", args)
+        elif state == "What dataset would you like to view?":
+            err = "Dataset not found. Please try again. \
+                    Existing dataset names are:"
+            return redirect(url_for('lookup'))
 
-        # output = ""
-        
-        # results = cur.stored_results()
+        elif u_collection not in invalid_names:
+            return redirect(url_for('edit'))
 
-        # close the MySQL connection
-        # cur.close()
-        # cnx.close()
-
-        return redirect(url_for('view'))
+        else:
+            return redirect(url_for('login'))
 
 # define behavior for data view page of site
 # on either GET or POST methods
-@app.route("/view")
+@app.route("/view", methods=["GET","POST"])
 def view():
 
     global results
 
-    return render_template('view.html', name='view', view_results=results)
+    if request.method == "GET":
+        mongo_collection = mongo.db[u_collection]
+        results = mongo_collection.find()
+        return render_template('view.html', name='ELN DB: View Data',
+                view_results=results, dataset=u_collection)
+    elif 'edit' in request.form:
+        return redirect(url_for('edit'))
+    else:
+        return redirect(url_for('home'))
 
+# define behavior for data editing page of site
+# on either GET or POST methods
+@app.route("/edit", methods=["GET","POST"])
+def edit():
+
+    global results
+    global err
+
+    if request.method == "GET":
+        mongo_collection = mongo.db[u_collection]
+        results = mongo_collection.find()
+        if err:
+            return render_template('edit.html', name='ELN DB: Edit Data',
+                    view_results=results, dataset=u_collection, error=err)
+        else:
+            return render_template('edit.html', name='ELN DB: Edit Data',
+                    view_results=results, dataset=u_collection)
+
+    elif 'cancel' in request.form:
+        return redirect(url_for('home'))
+    else:
+        try:
+            mongo_collection = mongo.db[u_collection]
+            data = request.form.get('data')
+            mongo_collection.insert_one(ast.literal_eval(data))
+            return redirect(url_for('view'))
+
+        # return an error message if the MongoDB server couldn't be reached or didn't
+        # accept the given credentials
+        except Exception as e:
+            print(e)
+            err = 'Please enter a valid data format.'
+            return redirect(url_for('edit'))
 
 # if this is the main file being run, as opposed to a module called by another
 # python program, run the app

@@ -7,12 +7,12 @@
     <title>{{ name }}</title>
 </head>
 <body>
+    <div class="main">
     <p class="error">{{ error }}</p>
     <h3>Welcome to ELN DB! What would you like to do?</h3>
-    <div class="home">
     <form role="form" method="POST" action="/home">
-        <button type="view" class="btn btn-default">View/Modify Data</button>
-        <button type="input" class="btn btn-default">Input New Data</button>
+        <button name="view" class="btn btn-default">View/Modify Data</button>
+        <button name="input" class="btn btn-default">Input New Data</button>
     </form>
     </div>
 </body>
