@@ -20,6 +20,9 @@ docs/.jekyll-metadata
 *.pdf
 *.pptx
 *.jpg
+*.zip
+*.csv
+!*lab.jpg
 
 # python env
 .Python

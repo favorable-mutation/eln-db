@@ -9,6 +9,12 @@ h3 {
     font-size: 2em;
 }
 
+h4 {
+    margin: 0.5em auto;
+    width: 100%;
+    font-size: 1.5em;
+}
+
 p {
     font-size: 1em;
 }
@@ -16,4 +22,14 @@ p {
 .main {
     background-color: #ffffff;
     padding: 0.75em;
+}
+
+code {
+    font-family: Hack;
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #313131;
+    background-color: #c2c2c2;
+    border-radius: 3px;
+    box-sizing: border-box
 }

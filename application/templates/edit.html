@@ -4,20 +4,41 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css'>
     <title>{{ name }}</title>
 </head>
 <body>
     <div class="main">
     <p class="error">{{ error }}</p>
     <h3>Editing {{ dataset }}</h3>
+    <p><em>Specify the fields for data entry in the format
+    </em><code>field1,field2,field3</code><em>. The </em><code>_id</code>
+    <em>field will be automatically included, while any fields not in the
+        dataset will be automatically excluded. If no valid fields are
+        specified, all fields will be automatically included. To update an
+        existing datapoint, specify its </em><code>_id</code><em> in the input
+        field. If no </em><code>_id</code><em> is specified, one will be
+        generated. To remove a datapoint, enter its </em><code>_id</code><em>
+        and click Remove.</em></p>
+    <form role="form" method="POST" action="/edit">
+        <p>Fields: <input class="fields" type="text" name="fields"></p>
+        <button name="set-fields" class="btn btn-default">Set Fields</button>
+        <h4>Add or Update Data:</h4>
+        {% for field in fields %}
+        <p>{{ field }}: <input class="login-form" type="text" name="{{ field }}"></p>
+        {% endfor %}
+        <button name="cancel" class="btn btn-default">Cancel</button>
+        <button name="save" class="btn btn-default">Save</button>
+        <br />
+        <h4>Remove Data:</h4>
+        <input class="remove" type-"text" name="remove">
+        <br />
+        <button name="cancel" class="btn btn-default">Cancel</button>
+        <button name="remove" class="btn btn-default">Remove</button>
+    </form>
     {% for result in view_results %}
     <p>{{ result }}</p>
     {% endfor %}
-    <form role="form" method="POST" action="/edit">
-        <p>Add Data: <input class="login-form" type="text" name="data"></p>
-        <button name="submit" class="btn btn-default">Submit</button>
-        <button name="cancel" class="btn btn-default">Cancel</button>
-    </form>
     </div>
 </body>
 </html>

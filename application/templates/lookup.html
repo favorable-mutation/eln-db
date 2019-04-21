@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css'>
     <title>{{ name }}</title>
 </head>
 <body>
@@ -15,7 +16,8 @@
     <h3>{{ state }}</h3>
     <form role="form" method="POST" action="/lookup">
         <p>Data Collection Name: <input type="text" name="lookup"></p>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button name="back" class="btn btn-default">Back</button>
+        <button name="submit" class="btn btn-default">Submit</button>
     </form>
     </div>
 </body>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css'>
     <title>{{ name }}</title>
 </head>
 <body>
@@ -13,7 +14,8 @@
     <form role="form" method="POST" action="/">
         <p>Username: <input class="login-form" type="text" name="user"></p>
         <p>Password: <input class="login-form" type="password" name="password"></p>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button name="manage" class="btn btn-default">Manage Users</button>
+        <button name="submit" class="btn btn-default">Submit</button>
     </form>
     </div>
 </body>
